@@ -1,6 +1,5 @@
 str = [[aasadafagahajakalaqawaearatayauaiaoapazaxacavabanama;ssdsfsgshsjskslsqswsesrstsysusisospszsxscsvsbsnsms;ddfdgdhdjdkdldqdwdedrdtdydudidodpdzdxdcdvdbdndmd;ffgfhfjfkflfqfwfefrftfyfufifofpfzfxfcfvfbfnfmf;gghgjgkglgqgwgegrgtgygugigogpgzgxgcgvgbgngmg;hhjhkhlhqhwhehrhthyhuhihohphzhxhchvhbhnhmh;jjkjljqjwjejrjtjyjujijojpjzjxjcjvjbjnjmj;kklkqkwkekrktkykukikokpkzkxkckvkbknkmk;llqlwlelrltlylulilolplzlxlclvlblnlml;qqwqeqrqtqyquqiqoqpqzqxqcqvqbqnqmq;wwewrwtwywuwiwowpwzwxwcwvwbwnwmw;eereteyeueieoepezexecevebeneme;rrtryrurirorprzrxrcrvrbrnrmr;ttytutitotptztxtctvtbtntmt;yyuyiyoypyzyxycyvybynymy;uuiuoupuzuxucuvubunumu;iioipizixicivibinimi;oopozoxocovobonomo;ppzpxpcpvpbpnpmp;zzxzczvzbznzmz;xxcxvxbxnxmx;ccvcbcncmc;vvbvnvmv;bbnbmb;nnmn;mm;;AASADAFAGAHAJAKALAQAWAEARATAYAUAIAOAPAZAXACAVABANAMA:SSDSFSGSHSJSKSLSQSWSESRSTSYSUSISOSPSZSXSCSVSBSNSMS:DDFDGDHDJDKDLDQDWDEDRDTDYDUDIDODPDZDXDCDVDBDNDMD:FFGFHFJFKFLFQFWFEFRFTFYFUFIFOFPFZFXFCFVFBFNFMF:GGHGJGKGLGQGWGEGRGTGYGUGIGOGPGZGXGCGVGBGNGMG:HHJHKHLHQHWHEHRHTHYHUHIHOHPHZHXHCHVHBHNHMH:JJKJLJQJWJEJRJTJYJUJIJOJPJZJXJCJVJBJNJMJ:KKLKQKWKEKRKTKYKUKIKOKPKZKXKCKVKBKNKMK:LLQLWLELRLTLYLULILOLPLZLXLCLVLBLNLML:QQWQEQRQTQYQUQIQOQPQZQXQCQVQBQNQMQ:WWEWRWTWYWUWIWOWPWZWXWCWVWBWNWMW:EERETEYEUEIEOEPEZEXECEVEBENEME:RRTRYRURIRORPRZRXRCRVRBRNRMR:TTYTUTITOTPTZTXTCTVTBTNTMT:YYUYIYOYPYZYXYCYVYBYNYMY:UUIUOUPUZUXUCUVUBUNUMU:IIOIPIZIXICIVIBINIMI:OOPOZOXOCOVOBONOMO:PPZPXPCPVPBPNPMP:ZZXZCZVZBZNZMZ:XXCXVXBXNXMX:CCVCBCNCMC:VVBVNVMV:BBNBMB:NNMN:MM::]]
 longbow_ns = vim.api.nvim_create_namespace('longbow')
-ONE_INDEX = 1
 
 function normal(s)
   vim.api.nvim_cmd({
@@ -67,8 +66,8 @@ function populate_window(seq)
       -- taken from SO
       char = vim.fn.strcharpart(vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1), 0, 1)
       wcol = vim.fn.wincol()
-      len = vim.fn.strdisplaywidth(char, vim.fn.wincol() - vim.fn.getwininfo(vim.fn.win_getid())[1].textoff - ONE_INDEX)
-      local this_str = str:sub(str_idx, str_idx + len - ONE_INDEX)
+      len = vim.fn.strdisplaywidth(char, vim.fn.wincol() - vim.fn.getwininfo(vim.fn.win_getid())[1].textoff - 1)
+      local this_str = str:sub(str_idx, str_idx + len - 1)
 
       -- add previous to mega map
       local to_add = this_str
@@ -76,7 +75,7 @@ function populate_window(seq)
         mega_map[str:sub(str_idx - 1, str_idx)] = prev_pos
       end
       for i = 1, #to_add - 1 do
-        mega_map[to_add:sub(i, i + 2 - ONE_INDEX)] = pos -- chunks of two
+        mega_map[to_add:sub(i, i + 1)] = pos -- chunks of two
       end
 
       str_idx = str_idx + len
@@ -101,7 +100,7 @@ function populate_window(seq)
         end
       end
 
-      vim.api.nvim_buf_set_extmark(0, longbow_ns, pos.line - ONE_INDEX, pos.col, {
+      vim.api.nvim_buf_set_extmark(0, longbow_ns, pos.line - 1, pos.col, {
         virt_text = virt_text,
         virt_text_pos = "overlay",
         hl_mode = hl_mode,
