@@ -119,6 +119,7 @@ function populate_window(seq)
     end
 
     if vim.fn.line('.') >= winbot then break end
+    -- TODO set curswant to left bound first
     normal('gj')
     ::nextline::
   end
