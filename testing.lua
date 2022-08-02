@@ -113,7 +113,6 @@ function populate_window(seq)
       normal('l')
       prev_pos = pos
       pos = to_pos(vim.api.nvim_win_get_cursor(0))
-      prev_wcol = new_wcol
       col = pos.col
     end
 
