@@ -34,6 +34,12 @@ function populate_window(seq)
   local winheight = vim.fn.winheight(0)
   local winbot = vim.fn.line('w$')
   -- TODO get horizontal bounds
+
+  -- setting 'list' to true is required for the cursor to go to the first
+  -- virtual column of a tab character instead of the last
+  local list_opt_save = vim.api.nvim_win_get_option(0, 'list')
+  vim.api.nvim_win_set_option(0, 'list', true)
+
   local winview = vim.fn.winsaveview()
   local str_idx = 1
   local mega_map = {}
@@ -46,7 +52,6 @@ function populate_window(seq)
     local r_pos = to_pos(vim.api.nvim_win_get_cursor(0))
     local r_wcol = vim.fn.wincol()
     local r_col = r_pos.col
-    print(vim.inspect(r_pos))
     normal('g^')
     -- FIXME: doesn't work properly when there's a TAB
     -- partially off the right edge of the screen
@@ -126,18 +131,12 @@ function populate_window(seq)
 
   local s = k1 .. k2
 
+  vim.api.nvim_buf_clear_namespace(bufnr, longbow_ns, 0, -1)
   if mega_map[s] then
     vim.api.nvim_win_set_cursor(0, un_pos(mega_map[s]))
   end
 
-  vim.defer_fn(
-    function()
-      if vim.api.nvim_buf_is_valid(bufnr) then
-        vim.api.nvim_buf_clear_namespace(bufnr, longbow_ns, 0, -1)
-      end
-    end,
-    150
-  )
+  vim.api.nvim_win_set_option(0, 'list', list_opt_save)
 end
 
 function getchar_handler()
