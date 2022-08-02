@@ -124,7 +124,6 @@ function populate_window(seq)
   end
   vim.fn.winrestview(winview)
   vim.cmd[[redraw!]]
-  -- print(str_idx)
 
   local k1 = getchar_handler()
   local k2 = getchar_handler()
