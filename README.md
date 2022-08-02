@@ -1,5 +1,8 @@
 # longbow.nvim 🏹
 
+
+https://user-images.githubusercontent.com/44309097/182473181-59d268da-bdf2-4542-883c-38fcce56075d.mov
+
 *the ultraprecise, uncompromising visible-editor-area motion*
 
 ## Features
