@@ -7,26 +7,6 @@ function normal(s)
     args = { s }
   }, {})
 end
-function report()
-  normal('g^')
-  local l_pos = vim.api.nvim_win_get_cursor(0)
-  normal('g$')
-  local r_pos = vim.api.nvim_win_get_cursor(0)
-  print(vim.inspect(l_pos), vim.inspect(r_pos))
-end
-
-local	bruhdah = tonumber('3') + 7 +     3 
-
-function to_pos(tup)
-  return {
-    line = tup[1],
-    col = tup[2]
-  }
-end
-
-function un_pos(pos)
-  return { pos.line, pos.col }
-end
 
 function populate_window(seq)
   local bufnr = vim.api.nvim_get_current_buf()
@@ -48,15 +28,15 @@ function populate_window(seq)
     if vim.fn.line('.') > winbot then break end
 
     normal('g$')
-    local r_pos = to_pos(vim.api.nvim_win_get_cursor(0))
+    local r_pos = vim.api.nvim_win_get_cursor(0)
     local r_wcol = vim.fn.wincol()
-    local r_col = r_pos.col
+    local r_col = r_pos[2]
     normal('g^')
     -- FIXME: doesn't work properly when there's a TAB
     -- partially off the right edge of the screen
-    local pos = to_pos(vim.api.nvim_win_get_cursor(0))
+    local pos = vim.api.nvim_win_get_cursor(0)
     local l_pos = pos
-    local col = pos.col
+    local col = pos[2]
     local virt_text, hl_mode
     local char, wcol, len, prev_pos
     local DO_BREAK = false
@@ -90,7 +70,7 @@ function populate_window(seq)
 
       if col == r_col then -- ended
         DO_BREAK = true
-        if col > l_pos.col then -- non-empty line
+        if col > l_pos[2] then -- non-empty line
           if vim.fn.winwidth('.') > wcol then -- has space at end
             local virt_text_2 = { str:sub(str_idx, str_idx), 'Whitespace' }
             table.insert(virt_text, virt_text_2)
@@ -100,7 +80,7 @@ function populate_window(seq)
         end
       end
 
-      vim.api.nvim_buf_set_extmark(0, longbow_ns, pos.line - 1, pos.col, {
+      vim.api.nvim_buf_set_extmark(0, longbow_ns, pos[1] - 1, pos[2], {
         virt_text = virt_text,
         virt_text_pos = "overlay",
         hl_mode = hl_mode,
@@ -112,8 +92,8 @@ function populate_window(seq)
 
       normal('l')
       prev_pos = pos
-      pos = to_pos(vim.api.nvim_win_get_cursor(0))
-      col = pos.col
+      pos = vim.api.nvim_win_get_cursor(0)
+      col = pos[2]
     end
 
     if vim.fn.line('.') >= winbot then break end
@@ -131,7 +111,7 @@ function populate_window(seq)
 
   vim.api.nvim_buf_clear_namespace(bufnr, longbow_ns, 0, -1)
   if mega_map[s] then
-    vim.api.nvim_win_set_cursor(0, un_pos(mega_map[s]))
+    vim.api.nvim_win_set_cursor(0, mega_map[s])
   end
 
   vim.api.nvim_win_set_option(0, 'list', list_opt_save)
