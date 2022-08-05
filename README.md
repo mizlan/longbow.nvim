@@ -2,7 +2,7 @@
 
 # longbow.nvim 🏹
 
-*the ultraprecise, uncompromising weapon in your arsenal*
+*the ultraprecise, uncompromising weapon in your motion arsenal*
 
 https://user-images.githubusercontent.com/44309097/182473181-59d268da-bdf2-4542-883c-38fcce56075d.mov
 
@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/44309097/182473181-59d268da-bdf2-4542-
 
 Longbow is a *visible-editor-area motion* for Neovim that does not use any form
 of direct search in its targeting mechanism. Instead, it fills all text
-onscreen with character labels in such a way all consecutive sequences of two
+onscreen with character labels in such a way that all consecutive sequences of two
 labels are unique ([→ how?](https://en.wikipedia.org/wiki/De_Bruijn_sequence)).
 This way, all you need to do is type the character label at the location you'd
 like to jump to, and then the character immediately to the right of it, and
