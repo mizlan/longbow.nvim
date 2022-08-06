@@ -88,6 +88,7 @@ function M.run(str)
 
       else
         -- attempt to extrapolate highlight group over the virtual char length
+        -- needs tsplayground for TS version
 
         local highlighter_m = require('vim.treesitter.highlighter')
         local tsplayground_utils_m = prequire('nvim-treesitter-playground.utils')
